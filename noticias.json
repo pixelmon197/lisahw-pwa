@@ -1,0 +1,24 @@
+{
+  "axel": [
+    { "id": "a1", "titulo": "Las PWA ganan terreno en el desarrollo móvil", "resumen": "Cada vez más equipos eligen aplicaciones web progresivas para ofrecer experiencias instalables sin pasar por una tienda de apps.", "categoria": "Tecnología", "fecha": "2026-10-08" },
+    { "id": "a2", "titulo": "Service Workers: la clave del modo sin conexión", "resumen": "Permiten interceptar peticiones, guardar recursos en caché y mantener la app disponible aunque se pierda la red.", "categoria": "Tecnología", "fecha": "2026-10-09" },
+    { "id": "a3", "titulo": "Nuevas herramientas de DevTools para depurar caché", "resumen": "El panel Application facilita revisar manifest, Service Workers y Cache Storage en un solo lugar.", "categoria": "Desarrollo", "fecha": "2026-10-10" }
+  ],
+  "omar": [
+    { "id": "o1", "titulo": "Jornada de torneos universitarios este fin de semana", "resumen": "Equipos de varias facultades compiten en fútbol, básquetbol y voleibol.", "categoria": "Deportes", "fecha": "2026-10-10" },
+    { "id": "o2", "titulo": "Maratón de la ciudad abre inscripciones", "resumen": "Habrá recorridos de 5, 10 y 21 kilómetros para todos los niveles.", "categoria": "Deportes", "fecha": "2026-10-09" },
+    { "id": "o3", "titulo": "Entrenamientos abiertos en el gimnasio municipal", "resumen": "Clases gratuitas de acondicionamiento físico por las tardes.", "categoria": "Salud", "fecha": "2026-10-08" },
+    { "id": "o4", "titulo": "Torneo de esports reúne a jóvenes programadores", "resumen": "La competencia combina estrategia, trabajo en equipo y tecnología.", "categoria": "Deportes", "fecha": "2026-10-07" }
+  ],
+  "juan": [
+    { "id": "j1", "titulo": "Cumbre internacional discute energías limpias", "resumen": "Especialistas de distintos países comparten avances en energía solar y eólica.", "categoria": "Mundo", "fecha": "2026-10-09" },
+    { "id": "j2", "titulo": "Nuevas rutas aéreas conectan más ciudades", "resumen": "Aerolíneas anuncian vuelos directos que acortan los tiempos de viaje.", "categoria": "Economía", "fecha": "2026-10-08" },
+    { "id": "j3", "titulo": "Mercados cierran la semana con ligera alza", "resumen": "Los principales índices mostraron estabilidad tras días de volatilidad.", "categoria": "Economía", "fecha": "2026-10-07" },
+    { "id": "j4", "titulo": "Científicos presentan avances en reciclaje de plásticos", "resumen": "Un nuevo proceso promete reducir residuos en océanos y rellenos sanitarios.", "categoria": "Ciencia", "fecha": "2026-10-06" },
+    { "id": "j5", "titulo": "Programa de intercambio estudiantil amplía su cobertura", "resumen": "Más universidades se suman a las becas de movilidad internacional.", "categoria": "Mundo", "fecha": "2026-10-05" }
+  ],
+  "amanda": [
+    { "id": "m1", "titulo": "Festival de arte y música llega al centro cultural", "resumen": "Exposiciones, conciertos y talleres abiertos al público durante tres días.", "categoria": "Cultura", "fecha": "2026-10-10" },
+    { "id": "m2", "titulo": "Feria del libro estrena sección juvenil", "resumen": "Autores locales presentan sus obras y firman ejemplares.", "categoria": "Cultura", "fecha": "2026-10-09" }
+  ]
+}

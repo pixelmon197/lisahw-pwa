@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L.i.s.a.H.W - Sistema de Noticias</title>
+  <meta name="description" content="PWA de noticias con contenido dinámico por integrante del equipo.">
+  <meta name="theme-color" content="#0a3cff">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== APP SHELL: ENCABEZADO ===== -->
+  <header class="encabezado">
+    <button id="btnMenu" class="btn-icono" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <img src="icons/icon-192.png" alt="Logo LisaHW" class="logo">
+    <div class="titulos">
+      <h1>L.i.s.a.H.W</h1>
+      <p>Sistema de Noticias</p>
+    </div>
+    <span id="estadoRed" class="badge-red" role="status">En línea</span>
+  </header>
+
+  <!-- Aviso de nueva versión del Service Worker -->
+  <div id="bannerUpdate" class="banner" role="alert" hidden>
+    <span>🔄 Hay una nueva versión de la app.</span>
+    <button id="btnUpdate" class="btn">Actualizar</button>
+  </div>
+
+  <!-- Aviso de modo sin conexión -->
+  <div id="bannerOffline" class="banner banner-offline" role="status" hidden>
+    📴 Sin conexión: estás viendo la información guardada en tu dispositivo.
+  </div>
+
+  <!-- ===== APP SHELL: MENÚ (cajón lateral) ===== -->
+  <nav id="menu" class="menu" aria-label="Menú principal">
+    <a href="#inicio" data-vista="inicio">🏠 Inicio</a>
+    <a href="#axel" data-vista="axel">💻 Tecnología · Axel</a>
+    <a href="#omar" data-vista="omar">⚽ Deportes · Omar</a>
+    <a href="#juan" data-vista="juan">🌎 Mundo · Juan</a>
+    <a href="#amanda" data-vista="amanda">🎭 Cultura · Amanda</a>
+    <a href="#reportes" data-vista="reportes">📍 Reportes</a>
+    <button id="btnInstalar" class="btn" hidden>⬇ Instalar app</button>
+  </nav>
+  <div id="velo" class="velo" hidden></div>
+
+  <!-- ===== APP SHELL: ÁREA PRINCIPAL ===== -->
+  <main id="principal" class="principal">
+
+    <!-- INICIO -->
+    <section id="inicio" class="vista">
+      <h2>Bienvenido</h2>
+      <p>Esta PWA reúne noticias en cuatro secciones de contenido dinámico, cada una creada por un integrante del equipo.</p>
+
+      <div class="rejilla">
+        <a class="tarjeta-nav" href="#axel"><strong>Axel</strong><span>Tarjetas desde JSON</span></a>
+        <a class="tarjeta-nav" href="#omar"><strong>Omar</strong><span>Carrusel automático</span></a>
+        <a class="tarjeta-nav" href="#juan"><strong>Juan</strong><span>Buscador y filtros</span></a>
+        <a class="tarjeta-nav" href="#amanda"><strong>Amanda</strong><span>Publicar noticias</span></a>
+        <a class="tarjeta-nav" href="#reportes"><strong>Reportes</strong><span>Ubicación y foto del lugar</span></a>
+      </div>
+
+      <div class="panel">
+        <h3>Estado de la PWA</h3>
+        <ul class="estado">
+          <li>Service Worker: <b id="estadoSW">comprobando…</b></li>
+          <li>Versión en caché: <b id="estadoCache">—</b></li>
+          <li>Notificaciones: <b id="estadoNotif">—</b></li>
+          <li>Ubicación: <b id="estadoGeo">—</b></li>
+          <li>Conexión: <b id="estadoConexion">—</b></li>
+        </ul>
+        <button id="btnNotif" class="btn">🔔 Activar notificaciones</button>
+        <button id="btnProbarNotif" class="btn btn-sec">Probar notificación</button>
+        <button id="btnBuscarUpdate" class="btn btn-sec">↻ Buscar actualización</button>
+      </div>
+    </section>
+
+    <!-- AXEL: tarjetas generadas desde noticias.json -->
+    <section id="axel" class="vista" hidden>
+      <div class="cabecera-seccion">
+        <h2>Tecnología</h2>
+        <span class="autor">Por: Axel</span>
+      </div>
+      <p class="sub">Contenido dinámico: tarjetas cargadas desde <code>noticias.json</code>.</p>
+      <button id="btnActualizar" class="btn btn-sec">↻ Actualizar</button>
+      <small id="axelActualizado" class="nota"></small>
+      <div id="axelLista" class="rejilla"></div>
+    </section>
+
+    <!-- OMAR: carrusel automático -->
+    <section id="omar" class="vista" hidden>
+      <div class="cabecera-seccion">
+        <h2>Deportes</h2>
+        <span class="autor">Por: Omar</span>
+      </div>
+      <p class="sub">Contenido dinámico: carrusel que cambia de titular automáticamente.</p>
+      <div id="carrusel" class="carrusel" aria-live="polite">
+        <div id="carruselItem" class="carrusel-item"></div>
+        <div class="carrusel-ctrl">
+          <button id="carPrev" class="btn-icono" aria-label="Anterior">‹</button>
+          <div id="carPuntos" class="puntos"></div>
+          <button id="carNext" class="btn-icono" aria-label="Siguiente">›</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUAN: buscador y filtros -->
+    <section id="juan" class="vista" hidden>
+      <div class="cabecera-seccion">
+        <h2>Mundo</h2>
+        <span class="autor">Por: Juan</span>
+      </div>
+      <p class="sub">Contenido dinámico: busca y filtra noticias en tiempo real.</p>
+      <input id="juanBuscar" class="campo" type="search" placeholder="Buscar noticia…" aria-label="Buscar noticia">
+      <div id="juanFiltros" class="chips"></div>
+      <ul id="juanLista" class="lista"></ul>
+      <p id="juanVacio" class="nota" hidden>No hay resultados.</p>
+    </section>
+
+    <!-- AMANDA: publicar noticias (localStorage) -->
+    <section id="amanda" class="vista" hidden>
+      <div class="cabecera-seccion">
+        <h2>Cultura</h2>
+        <span class="autor">Por: Amanda</span>
+      </div>
+      <p class="sub">Contenido dinámico: publica noticias nuevas; se guardan en el dispositivo y lanzan una notificación.</p>
+      <form id="formNoticia" class="panel">
+        <label>Título
+          <input id="amTitulo" class="campo" required maxlength="80" placeholder="Título de la noticia">
+        </label>
+        <label>Resumen
+          <textarea id="amResumen" class="campo" required maxlength="200" rows="3" placeholder="Resumen breve"></textarea>
+        </label>
+        <button class="btn" type="submit">Publicar</button>
+      </form>
+      <div id="amandaLista" class="rejilla"></div>
+    </section>
+
+    <!-- REPORTES: geolocalización + foto (características del dispositivo) -->
+    <section id="reportes" class="vista" hidden>
+      <div class="cabecera-seccion">
+        <h2>Reportes</h2>
+        <span class="autor">Función del dispositivo</span>
+      </div>
+      <p class="sub">Registra un reporte con la ubicación y una foto del lugar. Se guarda en tu dispositivo y funciona <b>sin conexión</b>.</p>
+
+      <form id="formReporte" class="panel">
+        <label>Título
+          <input id="repTitulo" class="campo" required maxlength="80" placeholder="Ej. Evento en la plaza principal">
+        </label>
+        <label>Descripción
+          <textarea id="repDescripcion" class="campo" required maxlength="200" rows="3" placeholder="¿Qué está pasando?"></textarea>
+        </label>
+
+        <div class="bloque-permiso">
+          <p class="nota">📍 Al pulsar el botón, el navegador te pedirá permiso para usar tu <b>ubicación</b>. Solo se usa para este reporte y se guarda únicamente en tu dispositivo.</p>
+          <button id="btnUbicacion" type="button" class="btn btn-sec">📍 Obtener mi ubicación</button>
+          <p id="repUbicacion" class="nota" role="status">Aún no se ha obtenido la ubicación.</p>
+        </div>
+
+        <div class="bloque-permiso">
+          <p class="nota">📷 Puedes tomar una foto con la cámara (en el teléfono) o elegir una imagen. El navegador puede pedirte permiso de cámara.</p>
+          <input id="repFoto" type="file" accept="image/*" capture="environment" class="campo">
+          <img id="repVista" class="vista-previa" alt="Vista previa de la foto del reporte" hidden>
+        </div>
+
+        <button class="btn" type="submit">Guardar reporte</button>
+      </form>
+
+      <div id="repLista" class="rejilla"></div>
+    </section>
+
+  </main>
+
+  <!-- ===== APP SHELL: ELEMENTOS DE NAVEGACIÓN (barra inferior) ===== -->
+  <nav class="barra-nav" aria-label="Navegación inferior">
+    <a href="#inicio" data-vista="inicio"><span>🏠</span>Inicio</a>
+    <a href="#axel" data-vista="axel"><span>💻</span>Axel</a>
+    <a href="#omar" data-vista="omar"><span>⚽</span>Omar</a>
+    <a href="#juan" data-vista="juan"><span>🌎</span>Juan</a>
+    <a href="#amanda" data-vista="amanda"><span>🎭</span>Amanda</a>
+    <a href="#reportes" data-vista="reportes"><span>📍</span>Reportes</a>
+  </nav>
+
+  <!-- ===== APP SHELL: PIE DE PÁGINA ===== -->
+  <footer class="pie">
+    <p>L.i.s.a.H.W · Sistema de Noticias PWA</p>
+    <p>Equipo: Axel · Omar · Juan · Amanda</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
